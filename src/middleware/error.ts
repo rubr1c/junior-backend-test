@@ -8,8 +8,17 @@ export function errorHandler(
   err: unknown,
   _req: Request,
   res: Response,
-  _next: NextFunction,
+  next: NextFunction,
 ): void {
+  /**  if an error is thown after the response started streaming
+   *   it will try and send another one which will crash the app.
+   *   we delegate it to the default error handler to close the
+   *   connection safely.
+   */
+  if (res.headersSent) {
+    return next(err);
+  }
+
   const statusCode =
     err instanceof AppError
       ? err.statusCode

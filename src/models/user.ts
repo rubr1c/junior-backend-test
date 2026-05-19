@@ -12,7 +12,7 @@ const userRoles = ['user', 'admin'] as const;
 const userSchema = new Schema(
   {
     username: { type: String, required: true, unique: true },
-    password: { type: String, required: true },
+    password: { type: String, required: true, select: false },
     role: {
       type: String,
       required: true,
