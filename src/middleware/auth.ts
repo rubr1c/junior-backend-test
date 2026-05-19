@@ -18,36 +18,32 @@ export async function requireAuth(
   _res: Response,
   next: NextFunction,
 ): Promise<void> {
-  try {
-    const authHeader = req.headers.authorization;
+  const authHeader = req.headers.authorization;
 
-    if (!authHeader?.startsWith('Bearer ')) {
-      throw new AppError(HttpStatus.UNAUTHORIZED, 'Unauthorized');
-    }
-
-    const token = authHeader.split(' ')[1];
-
-    if (!token) {
-      throw new AppError(HttpStatus.UNAUTHORIZED, 'Unauthorized');
-    }
-
-    const payload = await jwt.verify(token);
-
-    if (!payload) {
-      throw new AppError(HttpStatus.UNAUTHORIZED, 'Invalid or expired token');
-    }
-
-    req.user = payload;
-    next();
-  } catch (error) {
-    next(error);
+  if (!authHeader?.startsWith('Bearer ')) {
+    throw new AppError(HttpStatus.UNAUTHORIZED, 'Unauthorized');
   }
+
+  const token = authHeader.split(' ')[1];
+
+  if (!token) {
+    throw new AppError(HttpStatus.UNAUTHORIZED, 'Unauthorized');
+  }
+
+  const payload = await jwt.verify(token);
+
+  if (!payload) {
+    throw new AppError(HttpStatus.UNAUTHORIZED, 'Invalid or expired token');
+  }
+
+  req.user = payload;
+  next();
 }
 
 export function requireRole(role: UserRole) {
   return (req: Request, _res: Response, next: NextFunction): void => {
     if (!req.user || req.user.role !== role) {
-      return next(new AppError(HttpStatus.FORBIDDEN, 'Access denied'));
+      throw new AppError(HttpStatus.FORBIDDEN, 'Access denied');
     }
 
     next();
