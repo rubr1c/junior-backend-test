@@ -3,11 +3,14 @@ import { pinoHttp } from 'pino-http';
 
 import { connectDB } from './config/db.js';
 import { env } from './config/env.js';
+import { errorHandler } from './middleware/error.js';
 import { logger } from './utils/logger.js';
 
 const app = express();
 
 app.use(pinoHttp({ logger }));
+
+app.use(errorHandler);
 
 try {
   await connectDB();
