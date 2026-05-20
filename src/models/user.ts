@@ -1,7 +1,5 @@
-import {
+import mongoose, {
   Schema,
-  model,
-  models,
   type HydratedDocument,
   type InferSchemaType,
   type Model,
@@ -28,5 +26,5 @@ export type User = InferSchemaType<typeof userSchema>;
 export type UserDocument = HydratedDocument<User>;
 
 export const UserModel =
-  (models.User as Model<User> | undefined) ??
-  model<User>('User', userSchema);
+  (mongoose.models.User as Model<User> | undefined) ??
+  mongoose.model<User>('User', userSchema);
