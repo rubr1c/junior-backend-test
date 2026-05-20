@@ -1,9 +1,4 @@
-import mongoose, {
-  Schema,
-  type HydratedDocument,
-  type InferSchemaType,
-  type Model,
-} from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
 const userRoles = ['user', 'admin'] as const;
 
@@ -27,9 +22,6 @@ const userSchema = new Schema(
 );
 
 export type UserRole = (typeof userRoles)[number];
-export type User = InferSchemaType<typeof userSchema>;
-export type UserDocument = HydratedDocument<User>;
 
 export const UserModel =
-  (mongoose.models.User as Model<User> | undefined) ??
-  mongoose.model<User>('User', userSchema);
+  mongoose.models.User ?? mongoose.model('User', userSchema);

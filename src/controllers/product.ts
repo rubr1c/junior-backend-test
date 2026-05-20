@@ -7,10 +7,7 @@ import { HttpStatus } from '../utils/http.js';
 export async function createProduct(req: Request, res: Response): Promise<void> {
   const product = await ProductModel.create(req.body);
 
-  res.status(HttpStatus.CREATED).json({
-    success: true,
-    data: product,
-  });
+  res.status(HttpStatus.CREATED).json(product);
 }
 
 export async function getProducts(req: Request, res: Response): Promise<void> {
@@ -24,8 +21,7 @@ export async function getProducts(req: Request, res: Response): Promise<void> {
   ]);
 
   res.status(HttpStatus.OK).json({
-    success: true,
-    data: products,
+    products,
     pagination: {
       total,
       page,
@@ -42,10 +38,7 @@ export async function getProductById(req: Request, res: Response): Promise<void>
     throw new AppError(HttpStatus.NOT_FOUND, 'Product not found');
   }
 
-  res.status(HttpStatus.OK).json({
-    success: true,
-    data: product,
-  });
+  res.status(HttpStatus.OK).json(product);
 }
 
 export async function updateProduct(req: Request, res: Response): Promise<void> {
@@ -58,10 +51,7 @@ export async function updateProduct(req: Request, res: Response): Promise<void> 
     throw new AppError(HttpStatus.NOT_FOUND, 'Product not found');
   }
 
-  res.status(HttpStatus.OK).json({
-    success: true,
-    data: product,
-  });
+  res.status(HttpStatus.OK).json(product);
 }
 
 export async function deleteProduct(req: Request, res: Response): Promise<void> {
@@ -71,8 +61,5 @@ export async function deleteProduct(req: Request, res: Response): Promise<void> 
     throw new AppError(HttpStatus.NOT_FOUND, 'Product not found');
   }
 
-  res.status(HttpStatus.OK).json({
-    success: true,
-    data: {},
-  });
+  res.status(HttpStatus.OK).json({ message: 'Product deleted successfully' });
 }

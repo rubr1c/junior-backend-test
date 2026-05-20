@@ -30,7 +30,6 @@ export function errorHandler(
   logger.error({ err }, message);
 
   res.status(statusCode).json({
-    success: false,
     error: message,
   });
 }

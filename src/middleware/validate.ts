@@ -12,7 +12,6 @@ export function validateRequest(
 
   if (!errors.isEmpty()) {
     res.status(HttpStatus.BAD_REQUEST).json({
-      success: false,
       errors: errors.array(),
     });
     return;

@@ -27,7 +27,6 @@ export async function login(req: Request, res: Response): Promise<void> {
   });
 
   res.status(HttpStatus.OK).json({
-    success: true,
     token,
   });
 }
