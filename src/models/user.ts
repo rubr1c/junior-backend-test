@@ -18,7 +18,12 @@ const userSchema = new Schema(
       default: 'user',
     },
   },
-  { timestamps: true },
+  { 
+    timestamps: true,
+    toJSON: {
+      versionKey: false,
+    },
+  },
 );
 
 export type UserRole = (typeof userRoles)[number];
